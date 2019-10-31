@@ -54,6 +54,7 @@
     "chartjs-plugin-datalabels": "^0.3.0",
     "classnames": "2.2.6",
     "draft-js": "^0.10.5",
+    "express-favicon": "^2.0.1",
     "fine-uploader": "^5.16.2",
     "firebase": "^5.3.0",
     "moment": "2.22.2",
