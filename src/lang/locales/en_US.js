@@ -37,6 +37,31 @@ module.exports = {
   /* 01.General */
   "general.copyright": "Gogo React © 2018 All Rights Reserved.",
 
+  "menu.myprofile": "MY PROFILE",
+  "menu.instagram": "INSTAGRAM",
+  "menu.embed": "EMBED",
+  "menu.billing": "BILLING",
+  "menu.logout": "LOGOUT",
+
+  "myprofile.name": "Name",
+  "myprofile.email": "Email",
+  "myprofile.phone": "Phone Number",
+  "myprofile.billing1": "Billing Address 1",
+  "myprofile.billing2": "Billing Address 2",
+  "myprofile.city": "City",
+  "myprofile.country": "Country",
+  "myprofile.state": "State",
+  "myprofile.instaprofilename": "Insta Profile Name",
+  "myprofile.amusinglyurl": "Amusingly URL",
+  "myprofile.autoenable": "Auto Enable By Default",
+  "myprofile.changepassword": "Change Password",
+  "myprofile.currentpassword": "Current Password",
+  "myprofile.newpassword": "New Password",
+  "myprofile.confirmpassword": "Confirm Password",
+  "myprofile.submit": "Submit",
+
+  "instagram.sync": "SYNC IMAGES FROM INSTAGRAM",
+
   /* 02.User Login, Logout, Register */
   "user.login-title": "Login",
   "user.register": "Register",
@@ -52,6 +77,11 @@ module.exports = {
   "user.username": "Username",
 
   /* 03.Menu */
+  "menu.myprofile": "MY PROFILE",
+  "menu.instagram": "INSTAGRAM",
+  "menu.embed": "EMBED",
+  "menu.billing": "BILLING",
+  "menu.logout": "LOGOUT",
   "menu.app": "Home",
   "menu.dashboards": "Dashboards",
   "menu.default": "Default",

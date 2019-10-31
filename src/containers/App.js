@@ -70,7 +70,7 @@ class App extends Component {
   						<NotificationContainer />
 						<Switch>
 							<InitialPath
-							path={`${match.url}app`}
+							path={`${match.url}`}
 							authUser={user}
 							component={MainRoute}
 						/>

@@ -1,4 +1,4 @@
-export const defaultMenuType = 'menu-default'; // 'menu-default', 'menu-sub-hidden', 'menu-hidden';
+export const defaultMenuType = 'menu-sub-hidden'; // 'menu-default', 'menu-sub-hidden', 'menu-hidden';
 export const defaultStartPath = '/app/dashboards/default'; 
 export const subHiddenBreakpoint=1440;
 export const menuHiddenBreakpoint = 768;

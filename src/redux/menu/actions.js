@@ -43,7 +43,7 @@ export const clickOnMobileMenu = (strCurrentClasses) => {
 export const setContainerClassnames = (clickIndex, strCurrentClasses) => {
     const currentClasses = strCurrentClasses ? strCurrentClasses.split(' ').filter(x => x != '') : '';
     let nextClasses = '';
-    if (clickIndex % 4 == 0) {
+    if (clickIndex % 2 === 0) {
         if (currentClasses.includes('menu-default') && currentClasses.includes('menu-sub-hidden')) {
             nextClasses = 'menu-default menu-sub-hidden';
         } else if (currentClasses.includes('menu-default')) {
@@ -54,7 +54,7 @@ export const setContainerClassnames = (clickIndex, strCurrentClasses) => {
             nextClasses = 'menu-hidden';
         }
         clickIndex = 0;
-    } else if (clickIndex % 4 == 1) {
+    } else if (clickIndex % 2 === 1) {
         if (currentClasses.includes('menu-default') && currentClasses.includes('menu-sub-hidden')) {
             nextClasses = 'menu-default menu-sub-hidden main-hidden sub-hidden';
         } else if (currentClasses.includes('menu-default')) {
@@ -64,27 +64,28 @@ export const setContainerClassnames = (clickIndex, strCurrentClasses) => {
         } else if (currentClasses.includes('menu-hidden')) {
             nextClasses = 'menu-hidden main-show-temporary';
         }
-    } else if (clickIndex % 4 == 2) {
-        if (currentClasses.includes('menu-default') && currentClasses.includes('menu-sub-hidden')) {
-            nextClasses = 'menu-default menu-sub-hidden sub-hidden';
-        } else if (currentClasses.includes('menu-default')) {
-            nextClasses = 'menu-default main-hidden sub-hidden';
-        } else if (currentClasses.includes('menu-sub-hidden')) {
-            nextClasses = 'menu-sub-hidden sub-hidden';
-        } else if (currentClasses.includes('menu-hidden')) {
-            nextClasses = 'menu-hidden main-show-temporary sub-show-temporary';
-        }
-    } else if (clickIndex % 4 == 3) {
-        if (currentClasses.includes('menu-default') && currentClasses.includes('menu-sub-hidden')) {
-            nextClasses = 'menu-default menu-sub-hidden sub-show-temporary';
-        } else if (currentClasses.includes('menu-default')) {
-            nextClasses = 'menu-default sub-hidden';
-        } else if (currentClasses.includes('menu-sub-hidden')) {
-            nextClasses = 'menu-sub-hidden sub-show-temporary';
-        } else if (currentClasses.includes('menu-hidden')) {
-            nextClasses = 'menu-hidden main-show-temporary';
-        }
-    }
+    } 
+    // else if (clickIndex % 4 == 2) {
+    //     if (currentClasses.includes('menu-default') && currentClasses.includes('menu-sub-hidden')) {
+    //         nextClasses = 'menu-default menu-sub-hidden sub-hidden';
+    //     } else if (currentClasses.includes('menu-default')) {
+    //         nextClasses = 'menu-default main-hidden sub-hidden';
+    //     } else if (currentClasses.includes('menu-sub-hidden')) {
+    //         nextClasses = 'menu-sub-hidden sub-hidden';
+    //     } else if (currentClasses.includes('menu-hidden')) {
+    //         nextClasses = 'menu-hidden main-show-temporary sub-show-temporary';
+    //     }
+    // } else if (clickIndex % 4 == 3) {
+    //     if (currentClasses.includes('menu-default') && currentClasses.includes('menu-sub-hidden')) {
+    //         nextClasses = 'menu-default menu-sub-hidden sub-show-temporary';
+    //     } else if (currentClasses.includes('menu-default')) {
+    //         nextClasses = 'menu-default sub-hidden';
+    //     } else if (currentClasses.includes('menu-sub-hidden')) {
+    //         nextClasses = 'menu-sub-hidden sub-show-temporary';
+    //     } else if (currentClasses.includes('menu-hidden')) {
+    //         nextClasses = 'menu-hidden main-show-temporary';
+    //     }
+    // }
     if (currentClasses.includes('menu-mobile')) {
         nextClasses += ' menu-mobile';
     }
