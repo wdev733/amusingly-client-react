@@ -1,5 +1,5 @@
 export const defaultMenuType = 'menu-sub-hidden'; // 'menu-default', 'menu-sub-hidden', 'menu-hidden';
-export const defaultStartPath = '/app/dashboards/default'; 
+export const defaultStartPath = '/instagram'; 
 export const subHiddenBreakpoint=1440;
 export const menuHiddenBreakpoint = 768;
 export const defaultLocale='en';
@@ -18,4 +18,4 @@ export const firebaseConfig = {
 };
 
 
-export const searchPath = "/app/layouts/search"
+export const searchPath = "/instagram"

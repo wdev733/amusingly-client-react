@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+
 import TopNav from 'Containers/TopNav'
 import Sidebar from 'Containers/Sidebar';
 
-import dashboards from './dashboards';
-import layouts from './layouts';
-import applications from './applications';
-import ui from './ui';
 import myprofile from './myprofile';
-
-import { connect } from 'react-redux';
 import instagram from './instagram';
 
 class MainApp extends Component {
@@ -25,10 +21,6 @@ class MainApp extends Component {
 						<Switch>
 							<Route path={'/myprofile'} component={myprofile} />
 							<Route path={'/instagram'} component={instagram} />
-							<Route path={`${match.url}/applications`} component={applications} />
-							<Route path={`${match.url}/dashboards`} component={dashboards} />
-							<Route path={`${match.url}/layouts`} component={layouts} />
-							<Route path={`${match.url}/ui`} component={ui} />
 							<Redirect to="/error" />
 						</Switch>
 					</div>
