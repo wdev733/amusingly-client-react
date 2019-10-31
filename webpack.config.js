@@ -42,7 +42,7 @@ module.exports = {
     entry: ["babel-polyfill", "react-hot-loader/patch", "./src/index.js"],
     output: {
         // The build folder.
-        path: resolveApp('dist'),
+        path: resolveApp('build'),
         // Generated JS file names (with nested folders).
         // There will be one main bundle, and one file per asynchronous chunk.
         // We don't currently advertise code splitting but Webpack supports it.
@@ -56,7 +56,7 @@ module.exports = {
     devServer: {
         contentBase: './src/index.js',
         compress: true,
-        port: 3005, // port number
+        port: 3000, // port number
         historyApiFallback: true,
         quiet: true
     },
@@ -126,8 +126,8 @@ module.exports = {
     },
     plugins: [
         new CopyWebpackPlugin([
-            {from:'src/assets/img',to:'assets/img'},{from:'src/assets/fonts',to:'assets/fonts'}
-        ]), 
+            { from: 'src/assets/img', to: 'assets/img' }, { from: 'src/assets/fonts', to: 'assets/fonts' }
+        ]),
         new FriendlyErrorsWebpackPlugin(),
         new CleanWebpackPlugin(pathsToClean, cleanOptions),
         new HtmlWebPackPlugin({
@@ -137,6 +137,10 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename: "assets/css/[name].[hash:8].css"
+        }),
+        new MiniCssExtractPlugin({
+            filename: "[name].[hash:8].css",
+            chunkFilename: "[id].[hash:8].css"
         })
     ]
 };
