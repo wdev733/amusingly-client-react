@@ -21,14 +21,14 @@ const InitialPath = ({ component: Component, ...rest, authUser }) =>
 	<Route
 		{...rest}
 		render={props =>
-			authUser
-				? <Component {...props} />
-				: <Redirect
-					to={{
-						pathname: '/login',
-						state: { from: props.location }
-					}}
-				/>}
+		(authUser && authUser.accessToken !== '' && authUser.accessToken !== null)
+		? <Component {...props} />
+		: <Redirect
+			to={{
+				pathname: '/login',
+				state: { from: props.location }
+			}}
+		/>}
 	/>;
 
 class App extends Component {
@@ -47,20 +47,27 @@ class App extends Component {
 
 					<Fragment>
   						<NotificationContainer />
-						<Switch>
-							<InitialPath
-							path={`${match.url}myprofile`}
-							authUser={user}
-							component={MainRoute}
-						/>
-							<InitialPath
-								path={`${match.url}instagram`}
-								authUser={user}
-								component={MainRoute}
-							/>
+							<Switch>
+								<InitialPath
+									path={`${match.url}myprofile`}
+									authUser={user}
+									component={MainRoute}
+								/>
 
-							<Route path={`/login`} component={login} />
-							<Route path={`/error`} component={error} />
+								<InitialPath
+									path={`${match.url}instagram`}
+									authUser={user}
+									component={MainRoute}
+								/>
+
+								<InitialPath
+									path={`${match.url}embed`}
+									authUser={user}
+									component={MainRoute}
+								/>
+
+								<Route path={`/login`} component={login} />
+								<Route path={`/error`} component={error} />
 							<Redirect to="/error" />
 						</Switch>
 					</Fragment>

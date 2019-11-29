@@ -67,14 +67,13 @@ module.exports = {
   "user.register": "Register",
   "user.forgot-password": "Forgot Password",
   "user.email": "E-mail",
+  "user.username": "Username",
   "user.password": "Password",
   "user.forgot-password-question": "Forget password?",
   "user.fullname": "Full Name",
   "user.login-button": "LOGIN",
   "user.register-button": "REGISTER",
   "user.reset-password-button": "RESET",
-  "user.buy": "BUY",
-  "user.username": "Username",
 
   /* 03.Menu */
   "menu.myprofile": "MY PROFILE",
@@ -82,6 +81,7 @@ module.exports = {
   "menu.embed": "EMBED",
   "menu.billing": "BILLING",
   "menu.logout": "LOGOUT",
+  "menu.list": "LIST",
   "menu.app": "Home",
   "menu.dashboards": "Dashboards",
   "menu.default": "Default",

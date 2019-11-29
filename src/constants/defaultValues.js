@@ -17,5 +17,33 @@ export const firebaseConfig = {
     messagingSenderId: "216495999563"
 };
 
+export const photoServerUrl = "https://www.amusingly.com/"
+
+export const serverUrl = "http://localhost:3061/"
+// export const serverUrl = "http://3.19.58.151:3061/"
 
 export const searchPath = "/instagram"
+
+export const defaultCustomer = {
+    CustomerID: 0,
+    UserName: "",
+    Password: "",
+    Name: "",
+    Email: "",
+    Phone: "",
+    BillingAddress1: "",
+    BillingAddress2: "",
+    City: "",
+    Country: "",
+    State: "",
+    InstaProfileName: "",
+    SalesRep: "",
+    UrlKey: "",
+    InstaUserId: "",
+    AccessToken: "",
+    ProfileLogo: "",
+    LastLogin: "",
+    LastSync: "",
+    Status: 0,
+    autosyscro: 0
+}

@@ -8,6 +8,7 @@ import Sidebar from 'Containers/Sidebar';
 
 import myprofile from './myprofile';
 import instagram from './instagram';
+import widget from './widget';
 
 class MainApp extends Component {
 	render() {
@@ -21,6 +22,7 @@ class MainApp extends Component {
 						<Switch>
 							<Route path={'/myprofile'} component={myprofile} />
 							<Route path={'/instagram'} component={instagram} />
+							<Route path={'/embed'} component={widget} />
 							<Redirect to="/error" />
 						</Switch>
 					</div>

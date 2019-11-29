@@ -1,100 +1,89 @@
 
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { auth } from '../../firebase';
+import { loginAPI } from '../../services/axios/api';
+
 import {
     LOGIN_USER,
-    REGISTER_USER,
     LOGOUT_USER
 } from 'Constants/actionTypes';
 
 import {
-    loginUserSuccess,
-    registerUserSuccess
+    loginUserSuccess
 } from './actions';
 
-const loginWithEmailPasswordAsync = async (email, password) =>
-    await auth.signInWithEmailAndPassword(email, password)
+const loginWithUsernamePasswordAsync = async (username, password) =>
+    await loginAPI(username, password)
         .then(authUser => authUser)
         .catch(error => error);
 
-function* loginWithEmailPassword({ payload }) {
-    const { email, password } = payload.user;
-    const { history } = payload;
-    try {
-        const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
-        if (!loginUser.message) {
-            localStorage.setItem('user_id', loginUser.user.uid);
-            yield put(loginUserSuccess(loginUser));
-            history.push('/');
-        } else {
-            // catch throw
-            console.log('login failed :', loginUser.message)
-        }
-    } catch (error) {
-        // catch throw
-        console.log('login error : ', error)
-    }
-}
+function* loginWithUsernamePassword({ payload }) {
 
-const registerWithEmailPasswordAsync = async (email, password) =>
-    await auth.createUserWithEmailAndPassword(email, password)
-        .then(authUser => authUser)
-        .catch(error => error);
+	const { username, password } = payload.user;
+	const { history } = payload;
+	
+	try {
+			const loginUser = yield call(loginWithUsernamePasswordAsync, username, password);
 
-function* registerWithEmailPassword({ payload }) {
-    const { email, password } = payload.user;
-    const { history } = payload
-    try {
-        const registerUser = yield call(registerWithEmailPasswordAsync, email, password);
-        if (!registerUser.message) {
-            localStorage.setItem('user_id', registerUser.user.uid);
-            yield put(registerUserSuccess(registerUser));
-            history.push('/')
-        } else {
-            // catch throw
-            console.log('register failed :', registerUser.message)
-        }
-    } catch (error) {
-        // catch throw
-        console.log('register error : ', error)
-    }
-}
+            if (loginUser.data) {
 
+                const token = loginUser.data.token;
 
+                if (token != '') {
+                    
+                    // Save admin info to localStorage
+                    localStorage.setItem("clientID", loginUser.data.account.CustomerID);
+                    localStorage.setItem("userName", loginUser.data.account.UserName);
+                    localStorage.setItem("accessToken", loginUser.data.account.AccessToken);
+                    localStorage.setItem("name", loginUser.data.account.Name);
+                    localStorage.setItem('email', loginUser.data.account.Email);
+    
+                    let authData = {
+                        clientID: loginUser.data.account.CustomerID,
+                        userName: loginUser.data.account.UserName,
+                        accessToken: loginUser.data.account.AccessToken,
+                        name: loginUser.data.account.Name,
+                        email: loginUser.data.account.Email
+                    };
 
-const logoutAsync = async (history) => {
-    await auth.signOut().then(authUser => authUser).catch(error => error);
-    history.push('/')
+                    yield put(loginUserSuccess(authData));
+                    history.push('/');
+                }
+			}
+            
+            return;
+	} catch (error) {
+			// catch throw
+			console.log('login error : ', error)
+	}
 }
 
 function* logout({payload}) {
     const { history } = payload
     try {
-        yield call(logoutAsync,history);
-        localStorage.removeItem('user_id');
+            // yield call(logoutAsync, history);
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('clientID');
+            localStorage.removeItem('email');
+            localStorage.removeItem('name');
+            localStorage.removeItem('userName');
+
+            yield call(logoutUser, history);
+            history.push('/')
     } catch (error) {
     }
 }
 
-
-
-export function* watchRegisterUser() {
-    yield takeEvery(REGISTER_USER, registerWithEmailPassword);
-}
-
 export function* watchLoginUser() {
-    yield takeEvery(LOGIN_USER, loginWithEmailPassword);
+    yield takeEvery(LOGIN_USER, loginWithUsernamePassword);
 }
 
 export function* watchLogoutUser() {
     yield takeEvery(LOGOUT_USER, logout);
 }
 
-
 export default function* rootSaga() {
     yield all([
         fork(watchLoginUser),
-        fork(watchLogoutUser),
-        fork(watchRegisterUser)
+        fork(watchLogoutUser)
     ]);
 }

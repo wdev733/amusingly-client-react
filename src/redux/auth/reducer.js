@@ -7,7 +7,13 @@ import {
 } from 'Constants/actionTypes';
 
 const INIT_STATE = {
-    user: localStorage.getItem('user_id'),
+    user: {
+        clientID: localStorage.getItem("clientID"),
+        userName: localStorage.getItem("userName"),
+        accessToken: localStorage.getItem("accessToken"),
+        name: localStorage.getItem("fullName"),
+        email: localStorage.getItem("email"),
+    },
     loading: false
 };
 

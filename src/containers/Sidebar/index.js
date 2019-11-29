@@ -287,7 +287,7 @@ class Sidebar extends Component {
                   })}
                 >
                   <NavLink
-                    to="/app/applications"
+                    to="/embed"
                     onClick={e => this.openSubMenu(e, "embed")}
                   >
                     <i className="iconsmind-Air-Balloon" />{" "}
