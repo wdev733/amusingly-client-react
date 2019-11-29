@@ -62,6 +62,18 @@ module.exports = {
 
   "instagram.sync": "SYNC IMAGES FROM INSTAGRAM",
 
+  "widget.widget-type" : "WIDGET TYPE",
+  "widget.style": "STYLE",
+  "widget.thumbnail-size": "THUMBNAIL SIZE(PIXELS)",
+  "widget.layout": "LAYOUT",
+  "widget.hover-effect": "EFFECT",
+  "widget.padding": "PADDING",
+  "widget.width": "WIDTH",
+  "widget.background-color": "BACKGROUND COLOR(LEAVE BLANK FOR TRANSPARENT)",
+  "widget.text-color": "TEXT COLOR",
+  "widget.use-pop-up": "USE POP UP",
+  "widget.social-sharing": "SOCIAL SHARING",
+
   /* 02.User Login, Logout, Register */
   "user.login-title": "Login",
   "user.register": "Register",
@@ -76,11 +88,6 @@ module.exports = {
   "user.reset-password-button": "RESET",
 
   /* 03.Menu */
-  "menu.myprofile": "MY PROFILE",
-  "menu.instagram": "INSTAGRAM",
-  "menu.embed": "EMBED",
-  "menu.billing": "BILLING",
-  "menu.logout": "LOGOUT",
   "menu.list": "LIST",
   "menu.app": "Home",
   "menu.dashboards": "Dashboards",

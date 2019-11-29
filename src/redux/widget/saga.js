@@ -1,41 +1,117 @@
-import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
-import { widgetListAPI } from '../../services/axios/api';
+import { all, call, fork, put, takeEvery } from "redux-saga/effects";
+import { widgetListAPI, widgetAddAPI, widgetGetAPI, widgetUpdateAPI } from "../../services/axios/api";
 
-import {
-    WIDGET_LIST
-} from 'Constants/actionTypes';
+import { WIDGET_LIST, WIDGET_ADD, WIDGET_UPDATE, WIDGET_GET } from "Constants/actionTypes";
 
-import {
-    widgetListSuccess
-} from './actions';
+import { widgetListSuccess, widgetAddSuccess, widgetGetSuccess, widgetUpdateSuccess } from "./actions";
 
 const getWidgetListAsync = async () =>
-    await widgetListAPI()
-        .then(result => result)
-        .catch(error => error);
+  await widgetListAPI()
+    .then(result => result)
+    .catch(error => error);
 
 function* getWidgetList() {
+  try {
+    const result = yield call(getWidgetListAsync);
+    if (result.data.success == true) {
+      yield put(widgetListSuccess(result.data.data));
+    }
 
-	try {
-		const result = yield call(getWidgetListAsync);
-        console.log(result);
-        if (result.data.success == true) {
-            yield put(widgetListSuccess(result.data.data));
-        }
+    return;
+  } catch (error) {
+    // catch throw
+    console.log("error : ", error);
+  }
+}
 
-        return;
-	} catch (error) {
-        // catch throw
-        console.log('error : ', error)
-	}
+const widgetAddAsync = async widget =>
+  await widgetAddAPI(widget)
+    .then(result => result)
+    .catch(error => error);
+
+function* widgetAdd({ payload }) {
+  
+  const { widget, history } = payload;
+  try {
+    const result = yield call(widgetAddAsync, widget);
+    console.log(result);
+    if (result.data.success === true) {
+      yield put(widgetAddSuccess());
+      history.push("/embed/list");
+    }
+
+    return;
+  } catch (error) {
+    // catch throw
+    console.log("error : ", error);
+  }
+}
+
+const widgetGetAsync = async widget_id =>
+  await widgetGetAPI(widget_id)
+    .then(result => result)
+    .catch(error => error);
+
+function* widgetGet({ payload }) {
+  
+  const { widget_id } = payload;
+  
+  try {
+    const result = yield call(widgetGetAsync, widget_id);
+    if (result.data.success === true) {
+      yield put(widgetGetSuccess(result.data.data));
+    }
+
+    return;
+  } catch (error) {
+    // catch throw
+    console.log("error : ", error);
+  }
+}
+
+const widgetUpdateAsync = async widget =>
+  await widgetUpdateAPI(widget)
+    .then(result => result)
+    .catch(error => error);
+
+function* widgetUpdate({ payload }) {
+  const { widget, history } = payload;
+  try {
+    const result = yield call(widgetUpdateAsync, widget);
+    
+    if (result.data.success === true) {
+      yield put(widgetUpdateSuccess());
+      history.push("/embed/list");
+    }
+
+    return;
+  } catch (error) {
+    // catch throw
+    console.log("error : ", error);
+  }
 }
 
 export function* watchWigetList() {
-    yield takeEvery(WIDGET_LIST, getWidgetList);
+  yield takeEvery(WIDGET_LIST, getWidgetList);
+}
+
+export function* watchWigetAdd() {
+  yield takeEvery(WIDGET_ADD, widgetAdd);
+}
+
+export function* watchWigetUpdate() {
+  yield takeEvery(WIDGET_UPDATE, widgetUpdate);
+}
+
+export function* watchWigetGet() {
+  yield takeEvery(WIDGET_GET, widgetGet);
 }
 
 export default function* rootSaga() {
-    yield all([
-        fork(getWidgetList)
-    ]);
+  yield all([
+    fork(watchWigetList), 
+    fork(watchWigetAdd),
+    fork(watchWigetUpdate),
+    fork(watchWigetGet)
+  ]);
 }

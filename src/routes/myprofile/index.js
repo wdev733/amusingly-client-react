@@ -8,6 +8,15 @@ import BreadcrumbContainer from "Components/BreadcrumbContainer";
 import Select from "react-select";
 import CustomSelectInput from "Components/CustomSelectInput";
 
+import {
+  widgetType,
+  layoutType,
+  hoverEffectType,
+  usePopupType,
+  socialSharingType,
+  widgetCode
+} from '../../constants/defaultValues';
+
 const selectData = [
   { label: "Chocolate", value: "chocolate", key: 0 },
   { label: "Vanilla", value: "vanilla", key: 1 },
@@ -30,7 +39,6 @@ export default class extends Component {
   handleChangeLabelOver = selectedOptionLabelOver => {
     this.setState({ selectedOptionLabelOver });
   };
-
 
   render() {
     return (

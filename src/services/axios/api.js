@@ -22,9 +22,24 @@ const widgetListAPI = () => {
   return getClient(true).get("/api/widget/list")
 }
 
+const widgetAddAPI = (widget) => {
+  return getClient(true).post("/api/widget/add", widget);
+};
+
+const widgetUpdateAPI = widget => {
+  return getClient(true).post("/api/widget/update", widget);
+};
+
+const widgetGetAPI = embed_id => {
+  return getClient(true).get("/api/widget/w/" + embed_id);
+};
+
 export {
   loginAPI,
   instaImagesAPI,
   updateImageStatusAPI,
-  widgetListAPI
-}
+  widgetListAPI,
+  widgetAddAPI,
+  widgetUpdateAPI,
+  widgetGetAPI
+};
