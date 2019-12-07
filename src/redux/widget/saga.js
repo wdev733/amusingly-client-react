@@ -13,7 +13,7 @@ const getWidgetListAsync = async () =>
 function* getWidgetList() {
   try {
     const result = yield call(getWidgetListAsync);
-    if (result.data.success == true) {
+    if (result.data.success === true) {
       yield put(widgetListSuccess(result.data.data));
     }
 
@@ -24,17 +24,17 @@ function* getWidgetList() {
   }
 }
 
-const widgetAddAsync = async widget =>
-  await widgetAddAPI(widget)
+const widgetAddAsync = async (widget, imageIds) =>
+  await widgetAddAPI(widget, imageIds)
     .then(result => result)
     .catch(error => error);
 
 function* widgetAdd({ payload }) {
   
-  const { widget, history } = payload;
+  const { widget, imageIds, history } = payload;
   try {
-    const result = yield call(widgetAddAsync, widget);
-    console.log(result);
+    const result = yield call(widgetAddAsync, widget, imageIds);
+
     if (result.data.success === true) {
       yield put(widgetAddSuccess());
       history.push("/embed/list");
@@ -69,15 +69,15 @@ function* widgetGet({ payload }) {
   }
 }
 
-const widgetUpdateAsync = async widget =>
-  await widgetUpdateAPI(widget)
+const widgetUpdateAsync = async (widget, imageIds) =>
+  await widgetUpdateAPI(widget, imageIds)
     .then(result => result)
     .catch(error => error);
 
 function* widgetUpdate({ payload }) {
-  const { widget, history } = payload;
+  const { widget, imageIds, history } = payload;
   try {
-    const result = yield call(widgetUpdateAsync, widget);
+    const result = yield call(widgetUpdateAsync, widget, imageIds);
     
     if (result.data.success === true) {
       yield put(widgetUpdateSuccess());

@@ -22,12 +22,12 @@ const widgetListAPI = () => {
   return getClient(true).get("/api/widget/list")
 }
 
-const widgetAddAPI = (widget) => {
-  return getClient(true).post("/api/widget/add", widget);
+const widgetAddAPI = (widget, imageIds) => {
+  return getClient(true).post("/api/widget/add", { widget, imageIds });
 };
 
-const widgetUpdateAPI = widget => {
-  return getClient(true).post("/api/widget/update", widget);
+const widgetUpdateAPI = (widget, imageIds) => {
+  return getClient(true).post("/api/widget/update", { widget, imageIds });
 };
 
 const widgetGetAPI = embed_id => {

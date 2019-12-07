@@ -18,9 +18,9 @@ export const widgetListSuccess = widgetList => ({
   payload: { widgetList }
 });
 
-export const widgetAdd = (widget, history) => ({
+export const widgetAdd = (widget, imageIds, history) => ({
   type: WIDGET_ADD,
-  payload: { widget, history }
+  payload: { widget, imageIds, history }
 });
 
 export const widgetAddSuccess = () => ({
@@ -38,9 +38,9 @@ export const widgetGetSuccess = widget => ({
   payload: { widget }
 });
 
-export const widgetUpdate = (widget, history) => ({
+export const widgetUpdate = (widget, imageIds, history) => ({
   type: WIDGET_UPDATE,
-  payload: { widget, history }
+  payload: { widget, imageIds, history }
 });
 
 export const widgetUpdateSuccess = () => ({

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 
-import { widgetGet, widgetUpdate } from "Redux/actions";
+import { widgetGet, widgetUpdate, instagramImageList } from "Redux/actions";
 
 import IntlMessages from "Util/IntlMessages";
 import {
@@ -11,6 +11,8 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
+  CardImg,
+  Badge,
   Form,
   Label,
   Input,
@@ -49,7 +51,7 @@ class WidgetEditView extends Component {
     super(props);
 
     const { widgetId } = props.match.params;
-    
+
     this.state = {
       activeFirstTab: "1",
       widget: {
@@ -69,26 +71,58 @@ class WidgetEditView extends Component {
         hover_effect: "",
         embed_padding: "",
         embed_width: ""
-      }
+      },
+      selectedItems: []
     };
   }
 
   componentWillReceiveProps(props) {
     const { widgetItem } = props;
+
+    let imageIds = [];
+    if (widgetItem.images) {
+      if (widgetItem.images !== false && widgetItem.images.length > 0) {
+        for (let i = 0; i < widgetItem.images.length; i++) {
+          imageIds.push(widgetItem.images[i].image_id);
+        }
+      }
+    }
+    
     this.setState({
       widget: {
         ...this.state.widget,
         ...widgetItem
-      }
+      },
+      selectedItems: imageIds
+    });
+  }
+
+  handleCheckChange(event, id) {
+    let selectedItems = this.state.selectedItems;
+    if (selectedItems.includes(id)) {
+      selectedItems = selectedItems.filter(x => x !== id);
+    } else {
+      selectedItems.push(id);
+    }
+    this.setState({
+      selectedItems
     });
   }
 
   componentDidMount() {
     this.props.getWidget(this.state.widget.embed_id);
+
+    if (this.props.instagramImageList.length === 0) {
+      this.props.getInstagramImageList();
+    }
   }
 
   handleSubmitWidget = e => {
-    this.props.updateWidget(this.state.widget, this.props.history);
+    this.props.updateWidget(
+      this.state.widget,
+      this.state.selectedItems,
+      this.props.history
+    );
   };
 
   handleCopyWidgetCode = e => {
@@ -135,7 +169,6 @@ class WidgetEditView extends Component {
         popup: w.value
       }
     });
-    console.log(this.state);
   };
 
   handleChangeSocial = w => {
@@ -145,7 +178,6 @@ class WidgetEditView extends Component {
         socialsharing: w.value
       }
     });
-    console.log(this.state);
   };
 
   handleInput = e => {
@@ -177,7 +209,10 @@ class WidgetEditView extends Component {
   };
 
   render() {
-    return (
+    const { instagramImageList } = this.props;
+    return instagramImageList.length === 0 ? (
+      <div className="loading"></div>
+    ) : (
       <Fragment>
         <Row>
           <Colxx xxs="12">
@@ -246,6 +281,7 @@ class WidgetEditView extends Component {
                                   classNamePrefix="react-select"
                                   name="form-field-name"
                                   onChange={this.handleChangeWidgetType}
+                                  value={this.state.widget.widget_type}
                                   options={widgetType}
                                 />
                                 <IntlMessages id="widget.widget-type" />
@@ -494,6 +530,56 @@ class WidgetEditView extends Component {
                   </TabContent>
                 </Card>
               </Colxx>
+              <Colxx xss="6">
+                <Card className="mb-4">
+                  <Row>
+                    {instagramImageList.map((image, index) => {
+                      return (
+                        <Colxx
+                          sm="6"
+                          lg="4"
+                          xl="3"
+                          className="mb-3"
+                          key={image.CustomerInstaID}
+                        >
+                          <Card
+                            onClick={event =>
+                              this.handleCheckChange(
+                                event,
+                                image.CustomerInstaID
+                              )
+                            }
+                            className={classnames({
+                              active: this.state.selectedItems.includes(
+                                image.CustomerInstaID
+                              )
+                            })}
+                          >
+                            <div className="position-relative">
+                              <CardImg
+                                top
+                                alt={"No Image"}
+                                src={image.ImageInstaUrl}
+                              />
+                              <Badge
+                                color="secondary"
+                                pill
+                                className="position-absolute badge-top-left"
+                              >
+                                {this.state.selectedItems.includes(
+                                  image.CustomerInstaID
+                                )
+                                  ? "Selected"
+                                  : ""}
+                              </Badge>
+                            </div>
+                          </Card>
+                        </Colxx>
+                      );
+                    })}
+                  </Row>
+                </Card>
+              </Colxx>
             </Row>
           </Colxx>
         </Row>
@@ -502,17 +588,20 @@ class WidgetEditView extends Component {
   }
 }
 
-const mapStateToProps = ({ settings, widget }) => {
+const mapStateToProps = ({ settings, instagram, widget }) => {
   const { locale } = settings;
+  const { instagramImageList } = instagram;
   const { widgetItem } = widget;
 
   return {
     locale,
+    instagramImageList,
     widgetItem
   };
 };
 
 export default connect(mapStateToProps, {
   getWidget: widgetGet,
-  updateWidget: widgetUpdate
+  updateWidget: widgetUpdate,
+  getInstagramImageList: instagramImageList
 })(WidgetEditView);

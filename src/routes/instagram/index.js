@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from 'react-redux';
 
-import { injectIntl } from 'react-intl';
 import {
   Row,
   Card,
@@ -24,8 +23,6 @@ import {
   instagramImageList,
   instagramImageStatusChange
 } from "Redux/actions";
-
-import axios from 'axios';
 
 import "rc-switch/assets/index.css";
 
@@ -71,7 +68,7 @@ class ImageListLayout extends Component {
     const { instagramImageList } = this.state;
     
     return (
-      instagramImageList.length == 0 ?
+      instagramImageList.length === 0 ?
         <div className="loading"></div>
         :
         <Fragment>
@@ -109,11 +106,11 @@ class ImageListLayout extends Component {
                             src={image.ImageInstaUrl}
                           />
                           <Badge
-                            color={image.Status == 1 ? 'primary' : 'secondary'}
+                            color={image.Status == 1 ? "primary" : "secondary"}
                             pill
                             className="position-absolute badge-top-left"
                           >
-                            {image.Status == 1 ? 'Show' : 'Hide'}
+                            {image.Status == 1 ? "Show" : "Hide"}
                           </Badge>
                         </div>
                         <CardBody>
@@ -122,7 +119,9 @@ class ImageListLayout extends Component {
                               <Switch
                                 className="custom-switch custom-switch-primary"
                                 checked={image.Status == 1 ? true : false}
-                                onChange={imageIndex => this.handleCheckItem(index)}
+                                onChange={imageIndex =>
+                                  this.handleCheckItem(index)
+                                }
                               />
                             </Colxx>
                             <Colxx xxs="6" className="mb-3">

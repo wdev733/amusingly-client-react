@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 
-import { widgetAdd } from "Redux/actions";
+import { widgetAdd, instagramImageList } from "Redux/actions";
 
 import IntlMessages from "Util/IntlMessages";
 import {
@@ -11,6 +11,8 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
+  CardImg,
+  Badge,
   Form,
   Label,
   Input,
@@ -19,7 +21,7 @@ import {
   TabPane,
   Nav,
   NavItem,
-  NavLink as NavLinkRs,
+  NavLink as NavLinkRs
 } from "reactstrap";
 
 import Select from "react-select";
@@ -67,12 +69,13 @@ class WidgetAddView extends Component {
         hover_effect: "",
         embed_padding: "",
         embed_width: ""
-      }
+      },
+      selectedItems: []
     };
   }
 
   handleSubmitWidget = e => {
-    this.props.saveNewWidget(this.state.widget, this.props.history);
+    this.props.saveNewWidget(this.state.widget, this.state.selectedItems, this.props.history);
   };
 
   handleCopyWidgetCode = e => {
@@ -119,7 +122,6 @@ class WidgetAddView extends Component {
         popup: w.value
       }
     });
-    console.log(this.state);
   };
 
   handleChangeSocial = w => {
@@ -129,7 +131,6 @@ class WidgetAddView extends Component {
         socialsharing: w.value
       }
     });
-    console.log(this.state);
   };
 
   handleInput = e => {
@@ -160,13 +161,34 @@ class WidgetAddView extends Component {
     });
   };
 
+  handleCheckChange(event, id) {
+    let selectedItems = this.state.selectedItems;
+    if (selectedItems.includes(id)) {
+      selectedItems = selectedItems.filter(x => x !== id);
+    } else {
+      selectedItems.push(id);
+    }
+    this.setState({
+      selectedItems
+    });
+  }
+
+  componentDidMount() {
+    if (this.props.instagramImageList.length === 0) {
+      this.props.getInstagramImageList();
+    }
+  }
+
   render() {
-    return (
+    const { instagramImageList } = this.props;
+    return instagramImageList.length === 0 ? (
+      <div className="loading"></div>
+    ) : (
       <Fragment>
         <Row>
           <Colxx xxs="12">
             <Row>
-              <Colxx xxs="8">
+              <Colxx xxs="6">
                 <Card className="mb-4">
                   <CardHeader>
                     <Nav tabs className="card-header-tabs ">
@@ -478,6 +500,56 @@ class WidgetAddView extends Component {
                   </TabContent>
                 </Card>
               </Colxx>
+              <Colxx xss="6">
+                <Card className="mb-4">
+                  <Row>
+                    {instagramImageList.map((image, index) => {
+                      return (
+                        <Colxx
+                          sm="6"
+                          lg="4"
+                          xl="3"
+                          className="mb-3"
+                          key={image.CustomerInstaID}
+                        >
+                          <Card
+                            onClick={event =>
+                              this.handleCheckChange(
+                                event,
+                                image.CustomerInstaID
+                              )
+                            }
+                            className={classnames({
+                              active: this.state.selectedItems.includes(
+                                image.CustomerInstaID
+                              )
+                            })}
+                          >
+                            <div className="position-relative">
+                              <CardImg
+                                top
+                                alt={"No Image"}
+                                src={image.ImageInstaUrl}
+                              />
+                              <Badge
+                                color="secondary"
+                                pill
+                                className="position-absolute badge-top-left"
+                              >
+                                {this.state.selectedItems.includes(
+                                  image.CustomerInstaID
+                                )
+                                  ? "Selected"
+                                  : ""}
+                              </Badge>
+                            </div>
+                          </Card>
+                        </Colxx>
+                      );
+                    })}
+                  </Row>
+                </Card>
+              </Colxx>
             </Row>
           </Colxx>
         </Row>
@@ -486,14 +558,17 @@ class WidgetAddView extends Component {
   }
 }
 
-const mapStateToProps = ({ settings }) => {
+const mapStateToProps = ({ instagram, settings }) => {
+  const { instagramImageList } = instagram;
   const { locale } = settings;
 
   return {
+    instagramImageList,
     locale
   };
 };
 
 export default connect(mapStateToProps, {
-  saveNewWidget: widgetAdd
+  saveNewWidget: widgetAdd,
+  getInstagramImageList: instagramImageList
 })(WidgetAddView);
