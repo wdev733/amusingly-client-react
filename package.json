@@ -90,6 +90,7 @@
     "redux": "4.0.0",
     "redux-saga": "^0.16.0",
     "sortablejs": "^1.6.1",
+    "uuidv4": "^6.0.0",
     "video.js": "^7.3.0"
   }
 }

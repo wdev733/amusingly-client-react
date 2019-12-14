@@ -32,6 +32,8 @@ import classnames from "classnames";
 
 import { NotificationManager } from "Components/ReactNotifications";
 
+import { uuid } from "uuidv4";
+
 import { Colxx } from "Components/CustomBootstrap";
 import {
   widgetType,
@@ -54,6 +56,7 @@ class WidgetAddView extends Component {
       activeFirstTab: "1",
       widget: {
         embed_id: 0,
+        widget_name: '',
         customer_id: 0,
         customer_insta_id: 0,
         widget_type: "",
@@ -68,7 +71,8 @@ class WidgetAddView extends Component {
         layout_column: "",
         hover_effect: "",
         embed_padding: "",
-        embed_width: ""
+        embed_width: "",
+        widget_key: uuid()
       },
       selectedItems: []
     };
@@ -243,6 +247,34 @@ class WidgetAddView extends Component {
                         <Colxx sm="12">
                           <CardBody>
                             <Form>
+                              <Row>
+                                <Colxx sm="12">
+                                  <Label className="form-group has-float-label">
+                                    <Input
+                                      type="text"
+                                      name="widget_name"
+                                      value={this.state.widget.widget_name}
+                                      onChange={e => this.handleInput(e)}
+                                    />
+                                    <IntlMessages id="widget.name" />
+                                  </Label>
+                                </Colxx>
+                              </Row>
+                              <Row>
+                                <Colxx sm="12">
+                                  <Label className="form-group has-float-label">
+                                    <Input
+                                      type="text"
+                                      name="widget_key"
+                                      onChange={e => {
+                                        return false;
+                                      }}
+                                      value={this.state.widget.widget_key}
+                                    />
+                                    <IntlMessages id="widget.key" />
+                                  </Label>
+                                </Colxx>
+                              </Row>
                               <div className="form-group has-float-label">
                                 <Select
                                   components={{
@@ -316,7 +348,7 @@ class WidgetAddView extends Component {
                                       onChange={this.handleChangeHoverEffect}
                                       options={hoverEffectType}
                                     />
-                                    <IntlMessages id="widget.style" />
+                                    <IntlMessages id="widget.hovereffect" />
                                   </div>
                                 </Colxx>
                                 <Colxx sm="4">

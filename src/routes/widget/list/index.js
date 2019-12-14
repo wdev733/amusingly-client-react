@@ -73,11 +73,11 @@ class WidgetList extends Component {
                             className="w-40 w-sm-100"
                           >
                             <p className="list-item-heading mb-1 truncate">
-                              {widget.widget_type}
+                              {widget.widget_name}
                             </p>
                           </NavLink>
                           <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                            {widget.widget_style}
+                            {widget.widget_type} | {widget.widget_style}
                           </p>
                         </div>
                       </div>

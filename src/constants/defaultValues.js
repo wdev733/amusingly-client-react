@@ -19,8 +19,8 @@ export const firebaseConfig = {
 
 export const photoServerUrl = "https://www.amusingly.com/"
 
-// export const serverUrl = "http://localhost:3061/"
-export const serverUrl = "http://3.19.58.151:3061/"
+export const serverUrl = "http://localhost:3061/"
+// export const serverUrl = "http://3.19.58.151:3061/"
 
 export const searchPath = "/instagram"
 

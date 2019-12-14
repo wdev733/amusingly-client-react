@@ -56,6 +56,7 @@ class WidgetEditView extends Component {
       activeFirstTab: "1",
       widget: {
         embed_id: widgetId,
+        widget_name: "",
         customer_id: 0,
         customer_insta_id: 0,
         widget_type: "",
@@ -70,9 +71,15 @@ class WidgetEditView extends Component {
         layout_column: "",
         hover_effect: "",
         embed_padding: "",
-        embed_width: ""
+        embed_width: "",
+        widget_key: ""
       },
-      selectedItems: []
+      selectedItems: [],
+      selectedType: {},
+      selectedStyle: {},
+      selectedHoverEffect: {},
+      selectedUsePopup: {},
+      selectedSocialSharing: {}
     };
   }
 
@@ -88,12 +95,37 @@ class WidgetEditView extends Component {
       }
     }
     
+    const selectedType = widgetType.filter(it => {
+      return it.value === widgetItem.widget_type
+    })
+
+    const selectedStyle = widgetStyle.filter(it => {
+      return it.value === widgetItem.widget_style;
+    });
+
+    const selectedHoverEffect = hoverEffectType.filter(it => {
+      return it.value === widgetItem.hover_effect;
+    });
+
+    const selectedUsePopup = usePopupType.filter(it => {
+      return it.value === widgetItem.popup;
+    });
+
+    const selectedSocialSharing = socialSharingType.filter(it => {
+      return it.value === widgetItem.socialsharing;
+    });
+
     this.setState({
       widget: {
         ...this.state.widget,
         ...widgetItem
       },
-      selectedItems: imageIds
+      'selectedItems': imageIds,
+      'selectedType': selectedType.length > 0 ? selectedType[0] : {},
+      'selectedStyle': selectedStyle.length > 0 ? selectedStyle[0] : {},
+      'selectedHoverEffect': selectedHoverEffect.length > 0 ? selectedHoverEffect[0] : {},
+      'selectedUsePopup': selectedUsePopup.length > 0 ? selectedUsePopup[0] : {},
+      'selectedSocialSharing': selectedSocialSharing.length > 0 ? selectedSocialSharing[0] : {}
     });
   }
 
@@ -140,7 +172,8 @@ class WidgetEditView extends Component {
       widget: {
         ...this.state.widget,
         widget_type: w.value
-      }
+      },
+      selectedType: w
     });
   };
 
@@ -149,7 +182,8 @@ class WidgetEditView extends Component {
       widget: {
         ...this.state.widget,
         widget_style: w.value
-      }
+      },
+      selectedStyle: w
     });
   };
 
@@ -158,7 +192,8 @@ class WidgetEditView extends Component {
       widget: {
         ...this.state.widget,
         hover_effect: w.value
-      }
+      },
+      selectedHoverEffect: w
     });
   };
 
@@ -167,7 +202,8 @@ class WidgetEditView extends Component {
       widget: {
         ...this.state.widget,
         popup: w.value
-      }
+      },
+      selectedUsePopup: w
     });
   };
 
@@ -176,7 +212,8 @@ class WidgetEditView extends Component {
       widget: {
         ...this.state.widget,
         socialsharing: w.value
-      }
+      },
+      selectedSocialSharing: w
     });
   };
 
@@ -272,6 +309,34 @@ class WidgetEditView extends Component {
                         <Colxx sm="12">
                           <CardBody>
                             <Form>
+                              <Row>
+                                <Colxx sm="12">
+                                  <Label className="form-group has-float-label">
+                                    <Input
+                                      type="text"
+                                      name="widget_name"
+                                      value={this.state.widget.widget_name}
+                                      onChange={e => this.handleInput(e)}
+                                    />
+                                    <IntlMessages id="widget.name" />
+                                  </Label>
+                                </Colxx>
+                              </Row>
+                              <Row>
+                                <Colxx sm="12">
+                                  <Label className="form-group has-float-label">
+                                    <Input
+                                      type="text"
+                                      name="widget_key"
+                                      onChange={e => {
+                                        return false;
+                                      }}
+                                      value={this.state.widget.widget_key}
+                                    />
+                                    <IntlMessages id="widget.key" />
+                                  </Label>
+                                </Colxx>
+                              </Row>
                               <div className="form-group has-float-label">
                                 <Select
                                   components={{
@@ -281,7 +346,7 @@ class WidgetEditView extends Component {
                                   classNamePrefix="react-select"
                                   name="form-field-name"
                                   onChange={this.handleChangeWidgetType}
-                                  value={this.state.widget.widget_type}
+                                  value={this.state.selectedType}
                                   options={widgetType}
                                 />
                                 <IntlMessages id="widget.widget-type" />
@@ -295,6 +360,7 @@ class WidgetEditView extends Component {
                                   classNamePrefix="react-select"
                                   name="form-field-name"
                                   onChange={this.handleChangeWidgetStyle}
+                                  value={this.state.selectedStyle}
                                   options={widgetStyle}
                                 />
                                 <IntlMessages id="widget.style" />
@@ -344,9 +410,10 @@ class WidgetEditView extends Component {
                                       classNamePrefix="react-select"
                                       name="form-field-name"
                                       onChange={this.handleChangeHoverEffect}
+                                      value={this.state.selectedHoverEffect}
                                       options={hoverEffectType}
                                     />
-                                    <IntlMessages id="widget.style" />
+                                    <IntlMessages id="widget.hovereffect" />
                                   </div>
                                 </Colxx>
                                 <Colxx sm="4">
@@ -432,6 +499,7 @@ class WidgetEditView extends Component {
                                   className="react-select"
                                   classNamePrefix="react-select"
                                   onChange={this.handleChangePopup}
+                                  value={this.state.selectedUsePopup}
                                   options={usePopupType}
                                 />
                                 <IntlMessages id="widget.use-pop-up" />
@@ -461,6 +529,7 @@ class WidgetEditView extends Component {
                                 className="react-select"
                                 classNamePrefix="react-select"
                                 onChange={this.handleChangeSocial}
+                                value={this.state.selectedSocialSharing}
                                 options={socialSharingType}
                               />
                               <IntlMessages id="widget.social-sharing" />
