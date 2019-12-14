@@ -506,7 +506,7 @@ class WidgetAddView extends Component {
                                 }}
                                 className="textarea-widget"
                                 rows="6"
-                                defaultValue={widgetCode}
+                                defaultValue={widgetCode(this.state.widget.widget_type, this.state.widget.widget_key)}
                               />
                             </div>
                             <Button

@@ -571,9 +571,10 @@ class WidgetEditView extends Component {
                                 ref={c => {
                                   this.widgetTextArea = c;
                                 }}
+                                onChange={e => { return false; }}
                                 className="textarea-widget"
                                 rows="6"
-                                defaultValue={widgetCode}
+                                value={widgetCode(this.state.widget.widget_type, this.state.widget.widget_key)}
                               />
                             </div>
                             <Button
